@@ -296,3 +296,7 @@ input:focus {
     width: 100%;
     
   }
+
+  .active{
+    color: crimson !important;
+  }
