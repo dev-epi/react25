@@ -9,6 +9,7 @@ import Signup from "./auth/Signup";
 import ForgotPassword from "./auth/ForgotPassword";
 import ResetPassword from "./auth/ResetPassword";
 import NotFound from "./pages/NotFound";
+import User from "./pages/User";
 export default function AppRoutes() {
   return (
     <BrowserRouter>
@@ -18,6 +19,7 @@ export default function AppRoutes() {
           <Route path="" element={<Home />} />
           <Route path="profile" element={<Profile />} />
           <Route path="cv" element={<Cv />} />
+          <Route path="user/:id" element={<User/> } />
         </Route>
         <Route path="/auth" element={<AuthLayout />}>
           <Route path="signin" element={<Signin />} />
