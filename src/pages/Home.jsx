@@ -2,10 +2,20 @@ import { Link } from 'react-router-dom'
 import logo from '../assets/react.svg'
 import { users } from '../data/users'
 import Card from '../ui/Card'
+import { useEffect, useState } from 'react'
 
 export default function Home() {
 
-    let usersList = users
+    const [usersList , setUsers] = useState([])
+    useEffect(()=>{
+        fetch('http://localhost:3000/users')
+        .then(response => response.json())
+        .then(data=>{
+            
+            setUsers(data)
+            console.log(usersList)
+        })
+    } , [])
   return (
    
    <div className="row">
