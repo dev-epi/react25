@@ -7,17 +7,39 @@ import { useEffect, useState } from 'react'
 export default function Home() {
 
     const [usersList , setUsers] = useState([])
+
     useEffect(()=>{
+        fetchUsers()
+    } , [])
+    const fetchUsers = ()=>{
         fetch('http://localhost:3000/users')
         .then(response => response.json())
         .then(data=>{
-            
+           
             setUsers(data)
             console.log(usersList)
         })
-    } , [])
+    }
+    const search = (event)=>{
+        console.log(event.keyCode)
+        console.log(event.target.value)
+
+        if(event.keyCode == 13){
+            let text = (event.target.value).trim() 
+            if(text != ''){
+                fetch('http://localhost:3000/search-experiences/'+text)
+                .then(response=>response.json())
+                .then(data=>setUsers(data))
+            }else{
+               
+              fetchUsers()
+            }
+            
+        }
+    }
   return (
-   
+   <>
+   <input onKeyUp={search}></input>
    <div className="row">
           
           {
@@ -40,6 +62,7 @@ export default function Home() {
           }
        
     </div>
+    </>
 
    
   )

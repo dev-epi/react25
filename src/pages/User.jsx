@@ -1,7 +1,7 @@
 import { useNavigate, useParams } from "react-router-dom";
 import { users } from "../data/users";
 import { useEffect, useState } from "react";
-import '../assets/user.css';
+import usercss from '../assets/user.module.css';
 export default function User() {
   let { id } = useParams();
   let navigate = useNavigate();
@@ -21,16 +21,16 @@ export default function User() {
   },[])
 
 
-  return  <div className="container">
-  <aside id="aside">
-    <div className="aside-section">
+  return  <div className={usercss.container}>
+  <aside className={usercss.aside}>
+    <div className={usercss.asideSection}>
      
       <div className="avatar">
         <img src="assets/avatar.jpg" alt="me" />
       </div>
     </div>
-    <div className="aside-section">
-      <h3 className="section-heading">Profilo</h3>
+    <div className={usercss.asideSection}>
+      <h3 className={usercss.sectionHeading}>Profilo</h3>
       <hr />
       <div className="section-content">
         <h4>Name:</h4>
@@ -49,14 +49,14 @@ export default function User() {
         <p>B.A</p>
       </div>
     </div>
-   <div className="aside-section">
+   <div className={usercss.asideSection}>
     <div className="section-content">
       
     </div>
    </div>
   
 
-    <div className="aside-section">
+    <div className={usercss.asideSection}>
       <h3 className="section-heading">Interests</h3>
       <hr />
       <div className="section-content">
@@ -69,7 +69,7 @@ export default function User() {
     </div>
   
 
-    <div className="aside-section">
+    <div className={usercss.asideSection}>
       <h3 className="section-heading">Languages</h3>
       <hr />
       <div className="section-content">
@@ -90,7 +90,7 @@ export default function User() {
       </div>
     </div>
   </aside>
-  <main id="main">
+  <main className={usercss.main}>
     <section className="main-section">
       <h2>{user.firstName}</h2>
       <hr />
