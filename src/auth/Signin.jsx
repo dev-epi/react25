@@ -38,7 +38,7 @@ export default function Signin() {
               
                 <input type="text" placeholder="Email" name="email" onChange={handleInput} required/>
             </div>
-            <p>&nbsp;</p>
+            <p>{!user.email ? 'Champ obligatoir' : ''}</p>
             <label>Password</label>
             
             <div className="input-group">

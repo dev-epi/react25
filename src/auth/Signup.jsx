@@ -1,19 +1,25 @@
+import { useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
 
 export default function Signup() {
+    const {register , handleSubmit , formState : {errors}} = useForm({mode : 'onChange'})
+
+    const signup = (data) =>{
+        console.log(data)
+    }
   return (
-    <div><form>
+    <div><form onSubmit={handleSubmit(signup)} >
     <h2>Sign Up</h2>
     <label htmlFor="">Last Name</label>
     <div className="input-group">
-        <input type="text" placeholder="Last Name"/>
+        <input type="text" placeholder="Last Name" {...register('lastName' , {required : 'Last name required'})}/>
     </div>
-    <p>&nbsp;</p>
+    <p>{errors.lastName &&  errors.lastName.message}</p>
     <label htmlFor="">First Name</label>
     <div className="input-group">
-        <input type="text" placeholder="First Name"/>
+        <input type="text" placeholder="First Name"  {...register('firstName' , {minLength : {value : 3 , message : 'At least 3 caracters'}})}/>
     </div>
-    <p>&nbsp;</p>
+    <p>{errors.firstName && errors.firstName.message}</p>
     <label htmlFor="">Email Address</label>
     <div className="input-group">
       
