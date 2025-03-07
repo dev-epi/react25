@@ -1,11 +1,14 @@
 import { useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
+import axiosInstance from "../services/axiosInstance";
 
 export default function Signup() {
-    const {register , handleSubmit , formState : {errors}} = useForm({mode : 'onChange'})
+    const {register , handleSubmit , watch , formState : {errors}} = useForm({mode : 'onChange'})
 
     const signup = (data) =>{
-        console.log(data)
+        axiosInstance.post('/register' , data )
+        .then(response =>console.log(response))
+        .catch(err=>console.log(err))
     }
   return (
     <div><form onSubmit={handleSubmit(signup)} >
@@ -23,21 +26,26 @@ export default function Signup() {
     <label htmlFor="">Email Address</label>
     <div className="input-group">
       
-        <input type="text" placeholder="Email"/>
+        <input type="text" placeholder="Email" {...register('email' ,
+             {required : 'Email required' , minLength : {value : 6 , message : 'Email must at least 6 caracters'}
+              , pattern : {value : /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/ , message:'Not a valid email format'} })}/>
     </div>
-    <p>&nbsp;</p>
+    <p style={{color : 'red'}}>{errors.email && errors.email.message}</p>
     <label>Password</label>
     
     <div className="input-group">
-        <input type="password" placeholder="Password"/>
+        <input type="password" placeholder="Password" {...register('password')}/>
     </div>
     <p>&nbsp;</p>
     <label>Confirm Password</label>
     
     <div className="input-group">
-        <input type="password" placeholder="Confirm Password"/>
+        <input type="password" placeholder="Confirm Password" 
+        {...register('confirmPassword', 
+        {validate : (value)=> value === watch('password') || 'Confirm Password not valid'} )}
+        />
     </div>
-    <p>&nbsp;</p>
+    <p>{errors.confirmPassword && errors.confirmPassword.message}</p>
     <button type="submit" className="btn btn-secondary">Sign Up</button>
 </form>
 <Link to="/auth/signin">Already have an account ? Sign in</Link><br/>
