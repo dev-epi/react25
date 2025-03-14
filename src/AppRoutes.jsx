@@ -10,22 +10,25 @@ import ForgotPassword from "./auth/ForgotPassword";
 import ResetPassword from "./auth/ResetPassword";
 import NotFound from "./pages/NotFound";
 import User from "./pages/User";
+import { useState } from "react";
 export default function AppRoutes() {
+  const [token , setToken] = useState(localStorage.getItem('token2'))
+
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<Layout />}>
+        <Route path="/" element={token ?<Layout /> : <Navigate to='/auth/signin'/>}>
           <Route path="contact" element={<h1>Test</h1>} />
           <Route path="" element={<Home />} />
           <Route path="profile" element={<Profile />} />
           <Route path="cv" element={<Cv />} />
           <Route path="user/:id" element={<User/> } />
         </Route>
-        <Route path="/auth" element={<AuthLayout />}>
-          <Route path="signin" element={<Signin />} />
+        <Route path="/auth" element={!token ?<AuthLayout /> : <Navigate to='/'/>}>
+          <Route path="signin" element={<Signin  setToken={setToken}/>} />
           <Route path="signup" element={<Signup />} />
           <Route path="forgot-password" element={<ForgotPassword />} />
-          <Route path="reset-password" element={<ResetPassword />} />
+          <Route path="reset-password/:resetkey" element={<ResetPassword />} />
         </Route>
 
         <Route path="/logout" element={<Navigate to="/auth/signin" />} />

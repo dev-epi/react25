@@ -13,7 +13,7 @@ export default function Signup() {
   const navigate = useNavigate();
   const signup = (data) => {
     axiosInstance
-      .post("/registerr", data)
+      .post("/register", data)
       .then(() => navigate("/auth/signin"))
       .catch((error) => {
         console.log(error)

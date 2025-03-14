@@ -10,7 +10,7 @@ const axiosInstance = axios.create({
     }
 })
 axiosInstance.interceptors.response.use(
-    (response)=>response,
+    (response)=>response.data,
     (error)=>{
         let interceptorError = {}
          if(error.status == 404){

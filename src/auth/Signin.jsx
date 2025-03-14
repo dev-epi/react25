@@ -1,9 +1,11 @@
 import axios from "axios";
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
+import axiosInstance from "../services/axiosInstance";
 
 export default function Signin() {
+  const navigate = useNavigate()
   // const [email  , setEmail] = useState('')
   // const [password , setPassword] = useState('')
   const [user , setUser] = useState({
@@ -14,9 +16,12 @@ export default function Signin() {
   const login=(event)=>{
     //eliminer l'action par defaut des formulaires
     event.preventDefault()
-    axios.post('http://localhost:3000/login' ,user)
-    .then(success=>{
-      console.log(success)
+    axiosInstance.post('/login' ,user)
+    .then(token=>{
+      console.log(token)
+      sessionStorage.setItem('token' , token)
+      localStorage.setItem('token2' , token)
+      navigate('/')
     }).catch(error=>{
       console.log(error)
       if(error.response.data){
