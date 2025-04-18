@@ -1,11 +1,13 @@
 import axios from "axios";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import axiosInstance from "../services/axiosInstance";
+import { UserContext } from "../services/UserContext";
 
 export default function Signin() {
   const navigate = useNavigate()
+  let {setToken} = useContext(UserContext)
   // const [email  , setEmail] = useState('')
   // const [password , setPassword] = useState('')
   const [user , setUser] = useState({
@@ -21,6 +23,7 @@ export default function Signin() {
       console.log(token)
       sessionStorage.setItem('token' , token)
       localStorage.setItem('token2' , token)
+      setToken(token)
       navigate('/')
     }).catch(error=>{
       console.log(error)

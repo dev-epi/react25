@@ -9,9 +9,18 @@ const axiosInstance = axios.create({
         "Content-Type" : 'application/json'
     }
 })
+axiosInstance.interceptors.request.use(
+    (req)=>{
+        if(localStorage.getItem('token2')){
+            req.headers.Authorization = `Bearer ${localStorage.getItem('token')}`
+        }
+        return req;
+    }
+)
 axiosInstance.interceptors.response.use(
     (response)=>response.data,
     (error)=>{
+        console.log(error)
         let interceptorError = {}
          if(error.status == 404){
                         Swal.fire({

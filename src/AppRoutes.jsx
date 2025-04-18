@@ -1,6 +1,6 @@
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import Home from "./pages/Home";
-import Profile from "./pages/Profile";
+import Profile from "./pages/profile/Profile";
 import Cv from "./pages/Cv";
 import Layout from "./pages/Layout";
 import AuthLayout from "./auth/AuthLayout";
@@ -10,10 +10,11 @@ import ForgotPassword from "./auth/ForgotPassword";
 import ResetPassword from "./auth/ResetPassword";
 import NotFound from "./pages/NotFound";
 import User from "./pages/User";
-import { useState } from "react";
+import { useContext, useState } from "react";
+import { UserContext } from "./services/UserContext";
 export default function AppRoutes() {
-  const [token , setToken] = useState(localStorage.getItem('token2'))
 
+  let {token} = useContext(UserContext)
   return (
     <BrowserRouter>
       <Routes>
@@ -25,7 +26,7 @@ export default function AppRoutes() {
           <Route path="user/:id" element={<User/> } />
         </Route>
         <Route path="/auth" element={!token ?<AuthLayout /> : <Navigate to='/'/>}>
-          <Route path="signin" element={<Signin  setToken={setToken}/>} />
+          <Route path="signin" element={<Signin />} />
           <Route path="signup" element={<Signup />} />
           <Route path="forgot-password" element={<ForgotPassword />} />
           <Route path="reset-password/:resetkey" element={<ResetPassword />} />
