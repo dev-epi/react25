@@ -15,6 +15,8 @@ export const UserProvider =({children})=>{
     .then((data)=>{
       console.log(data)
       setUser(data)
+    }).catch(()=>{
+      logout()
     })
   }
 

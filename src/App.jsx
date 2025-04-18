@@ -7,6 +7,7 @@ export default function App() {
     <>
       
       <UserProvider>
+        
           <AppRoutes/>
       </UserProvider>
      
