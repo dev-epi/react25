@@ -2,11 +2,13 @@ import { Link } from 'react-router-dom'
 import logo from '../assets/react.svg'
 import { users } from '../data/users'
 import Card from '../ui/Card'
-import { useEffect, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
+import { SocketContext } from '../services/SocketContext'
 
 export default function Home() {
 
     const [usersList , setUsers] = useState([])
+    const {connectedUsers , ping} = useContext(SocketContext)
 
     useEffect(()=>{
         fetchUsers()
@@ -49,14 +51,18 @@ export default function Home() {
                     <img src={logo} alt="" />
                     <img src="/vite.svg" alt="" />
                 </div>
-                <h2>{user.firstName} {user.lastName}</h2>
+                <h2>{user.firstName} {user.lastName}
+
+
+                </h2>
+                {connectedUsers.includes(user._id) && <span>Connected</span>}
                 <div className="rating">
                     <h4>6.4</h4>
                     <h4>8 feedbacks</h4>
                 </div>
                 <Link to={'/user/'+user._id }><button className="btn btn-primary"> CV</button> </Link>
-                <button className="btn btn-secondary"><a href="feedbacks.html"> Feedbacks </a></button>
-                
+                <Link to ={`/feedbacks/${user._id}`}><button className="btn btn-secondary"> Feedbacks </button></Link>
+                <button onClick={()=>ping(user._id)}>Ping</button>
             </Card>
         </div>)
           }

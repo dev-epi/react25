@@ -12,7 +12,7 @@ const axiosInstance = axios.create({
 axiosInstance.interceptors.request.use(
     (req)=>{
         if(localStorage.getItem('token2')){
-            req.headers.Authorization = `Bearer ${localStorage.getItem('token')}`
+            req.headers.Authorization = `Bearer ${localStorage.getItem('token2')}`
         }
         return req;
     }

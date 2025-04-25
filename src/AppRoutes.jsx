@@ -10,20 +10,25 @@ import ForgotPassword from "./auth/ForgotPassword";
 import ResetPassword from "./auth/ResetPassword";
 import NotFound from "./pages/NotFound";
 import User from "./pages/User";
-import { useContext, useState } from "react";
+import { useContext } from "react";
 import { UserContext } from "./services/UserContext";
+import UserFeedbacks from "./pages/feedbacks/UserFeedbacks";
+import { store } from "./redux/store";
+import { Provider } from "react-redux";
 export default function AppRoutes() {
 
   let {token} = useContext(UserContext)
   return (
+
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={token ?<Layout /> : <Navigate to='/auth/signin'/>}>
+        <Route path="/" element={token ? <Provider store={store}><Layout /> </Provider>: <Navigate to='/auth/signin'/>}>
           <Route path="contact" element={<h1>Test</h1>} />
           <Route path="" element={<Home />} />
           <Route path="profile" element={<Profile />} />
           <Route path="cv" element={<Cv />} />
           <Route path="user/:id" element={<User/> } />
+          <Route path="feedbacks/:userId" element={<UserFeedbacks/>}/>
         </Route>
         <Route path="/auth" element={!token ?<AuthLayout /> : <Navigate to='/'/>}>
           <Route path="signin" element={<Signin />} />
