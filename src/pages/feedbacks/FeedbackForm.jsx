@@ -1,10 +1,11 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Card from "../../ui/Card";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { createFeedback } from "../../redux/feedbacksSlice";
 
 export default function FeedbackForm({userId}) {
 
+  const {current} = useSelector((state)=>state.feedbacks)
   const dispatch = useDispatch();
     const [newFeedback , setFeedback]= useState({
         text : '',
@@ -18,6 +19,11 @@ export default function FeedbackForm({userId}) {
         rating : 5,
         user_id : userId })
     }
+    useEffect(()=>{
+      if(current){
+        setFeedback(current)
+      }
+    }, [current])
   return (
     <Card>
       <form onSubmit={submit}>
