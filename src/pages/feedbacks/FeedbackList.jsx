@@ -1,15 +1,21 @@
 import { useParams } from "react-router-dom";
 import Card from "../../ui/Card"
+import { setCurrentFeed } from "../../redux/feedbacksSlice";
+import { useDispatch } from "react-redux";
 
-export default function FeedbackList() {
-    
+export default function FeedbackList({data = []}) {
+    const dispatch = useDispatch();
   return (
     <div className="feedback-list">
-      <Card>
+      {data.map((feed , index)=>{
+        return <Card key={index}>
         <button className="close">X</button>
-        <div className="num-display">9</div>
-        <div className="text-display">Awesome</div>
+        <button onClick={()=>dispatch(setCurrentFeed(feed))} >Edit</button>
+        <div className="num-display">{feed.rating}</div>
+        <div className="text-display">{feed.text}</div>
       </Card>
+      })}
+      
     </div>
   );
 }
